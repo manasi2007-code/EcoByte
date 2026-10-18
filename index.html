@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EcoByte - Smart E-Waste Awareness, Collection & Real-Time Tracking Portal. Responsibly recycle old electronics and track certified disposal.">
+  <meta name="color-scheme" content="light dark">
+  <title>EcoByte | E-Waste Awareness, Collection & Tracking Portal</title>
+  
+  <!-- Google Fonts for Modern Academic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- 1. TOP ANNOUNCEMENT BAR & NAVIGATION                      -->
+  <!-- ========================================================= -->
+  <aside class="announcement-bar">
+    <div class="announcement-content">
+      <span class="badge pulse-badge">Live Status</span>
+      <span>EcoByte Network: Over <strong>18,450 kg</strong> of hazardous e-waste safely recycled under certified WEEE standards.</span>
+    </div>
+    <div class="quick-admin-pill" id="quickAdminBadge">
+      <span class="admin-indicator"></span>
+      <span id="roleStatusText">Public Visitor</span>
+    </div>
+  </aside>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand-group" id="brandLogo">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"></path>
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.57-.88 1.79 1.79 0 0 0 0-1.78L17.5 10"></path>
+            <path d="M11 3.5v5l3-2.5-3-2.5z"></path>
+            <path d="M17 19l2 3.5 2-3.5"></path>
+            <path d="M4 14.5l-2-3.5 2-3.5"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Eco<span class="accent-text">Byte</span></span>
+          <span class="brand-subtitle">E-Waste Portal</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-links" id="mainNav">
+        <button class="nav-btn active" data-tab="home-page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-btn" data-tab="user-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-btn" data-tab="collection-form">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+          <span>Schedule Pickup</span>
+        </button>
+        <button class="nav-btn" data-tab="request-tracker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Track Request</span>
+        </button>
+        <button class="nav-btn" data-tab="awareness-centre">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <span>Learning Centre</span>
+        </button>
+        <button class="nav-btn admin-nav-btn" data-tab="admin-portal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          <span>Admin Portal</span>
+        </button>
+      </nav>
+
+      <!-- Action Utilities: Auth Buttons & Sun/Moon Theme Toggle -->
+      <div class="nav-actions">
+        <!-- Authentication Navigation Status / Buttons -->
+        <div id="navAuthContainer" class="nav-auth-container">
+          <!-- Populated by AuthManager in app.js -->
+        </div>
+
+        <!-- Sun and Moon Emoji Theme Toggle as requested -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Theme (Dark / Light)">
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-icon moon-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT WRAPPER                       -->
+  <!-- ========================================================= -->
+  <main class="main-wrapper">
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 1: HOME PAGE (INFO + UPFRONT LOGIN / SIGNUP)       -->
+    <!-- ------------------------------------------------------- -->
+    <section id="home-page" class="tab-pane active">
+
+      <!-- Hero Introduction Banner -->
+      <div class="hero-section">
+        <div class="hero-grid">
+          <div class="hero-text-content">
+            <div class="hero-badge">
+              <span class="badge-dot"></span> EcoByte National E-Waste Initiative
+            </div>
+            <h1 class="hero-heading">
+              Smart E-Waste Recovery with <span class="gradient-text">EcoByte.</span>
+            </h1>
+            <p class="hero-description">
+              Electronic waste is the fastest-growing waste stream worldwide. EcoByte connects citizens and institutions directly with certified recyclers to prevent groundwater toxins and extract valuable metals.
+            </p>
+            <div class="hero-cta-group">
+              <button class="btn btn-primary btn-lg" onclick="triggerSchedulePickup()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                Schedule a Pickup
+              </button>
+              <button class="btn btn-secondary btn-lg" onclick="switchTab('request-tracker')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Track Request
+              </button>
+            </div>
+          </div>
+
+          <!-- UPFRONT SIGN IN / SIGN UP BOX ON HOME PAGE -->
+          <div class="hero-auth-column">
+            <div class="auth-box-card" id="homeAuthLoggedOut">
+              <div class="auth-box-header">
+                <div>
+                  <span class="pill-tag">PORTAL ACCESS</span>
+                  <h3>Get Started with EcoByte</h3>
+                  <p>Sign in or register to schedule collections & unlock your Dashboard.</p>
+                </div>
+                <div class="auth-tab-buttons">
+                  <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="switchHomeAuthTab('login')">Sign In</button>
+                  <button type="button" class="auth-tab-btn" id="tabBtnSignup" onclick="switchHomeAuthTab('signup')">Sign Up</button>
+                </div>
+              </div>
+
+              <!-- Login Form -->
+              <div id="homeLoginPane" class="auth-pane active">
+                <form id="homeLoginForm" onsubmit="handleHomeLogin(event)">
+                  <div class="form-control">
+                    <label for="homeLoginEmail">Email Address</label>
+                    <input type="email" id="homeLoginEmail" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-control">
+                    <label for="homeLoginPassword">Password</label>
+                    <input type="password" id="homeLoginPassword" placeholder="Enter your password" required>
+                  </div>
+                  <div class="form-control">
+                    <label for="homeLoginRole">Account Type</label>
+                    <select id="homeLoginRole">
+                      <option value="Citizen">Citizen / Student</option>
+                      <option value="Admin">Facility Administrator</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">Sign In & Open Dashboard</button>
+                </form>
+              </div>
+
+              <!-- Sign Up Form -->
+              <div id="homeSignupPane" class="auth-pane hidden">
+                <form id="homeSignupForm" onsubmit="handleHomeSignup(event)">
+                  <div class="form-control">
+                    <label for="homeSignupName">Full Name</label>
+                    <input type="text" id="homeSignupName" placeholder="e.g. Aarav Sharma" required>
+                  </div>
+                  <div class="form-control">
+                    <label for="homeSignupEmail">Email Address</label>
+                    <input type="email" id="homeSignupEmail" placeholder="e.g. aarav@college.edu" required>
+                  </div>
+                  <div class="form-control">
+                    <label for="homeSignupPhone">Contact Phone</label>
+                    <input type="tel" id="homeSignupPhone" placeholder="e.g. +91 98765 43210" required>
+                  </div>
+                  <div class="form-control">
+                    <label for="homeSignupPassword">Create Password</label>
+                    <input type="password" id="homeSignupPassword" placeholder="Minimum 6 characters" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">Create Account & Proceed</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- When Already Logged In On Home Page -->
+            <div class="auth-box-card logged-in-card hidden" id="homeAuthLoggedIn">
+              <span class="pill-tag">ACTIVE SESSION</span>
+              <h3 id="loggedInUserName">Welcome</h3>
+              <p>You are authenticated as <strong id="loggedInRoleBadge">Citizen</strong> (ID: <span id="loggedInMemberId">EB-0000</span>).</p>
+              
+              <div class="logged-in-summary-box">
+                <div class="mini-stat">
+                  <span>Recycled Items</span>
+                  <strong id="userAccountRequests">1 Item</strong>
+                </div>
+              </div>
+
+              <div class="logged-in-actions-row">
+                <button class="btn btn-primary btn-block" onclick="switchTab('user-dashboard')">Open My Dashboard</button>
+                <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Sign Out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Impact Metrics Overview -->
+      <div class="section-container">
+        <div class="section-title-wrap">
+          <span class="pill-tag">VERIFIED METRICS</span>
+          <h2 class="section-title">National E-Waste Audit Summary</h2>
+          <p class="section-subtitle">Real-time indicators across all certified disposal facilities in the EcoByte grid.</p>
+        </div>
+
+        <div class="impact-metric-grid-home">
+          <div class="metric-box">
+            <div class="metric-icon-svg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <div class="metric-value" id="statTotalKg">18,450</div>
+            <div class="metric-label">kg E-Waste Recycled</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-icon-svg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="metric-value" id="statToxicDiverted">4,120</div>
+            <div class="metric-label">kg Toxins Diverted</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-icon-svg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="metric-value" id="statCarbonSaved">36.8</div>
+            <div class="metric-label">Tons CO2 Prevented</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-icon-svg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
+            <div class="metric-value" id="statCertificates">2,840</div>
+            <div class="metric-label">Certificates Issued</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Step Process -->
+      <div class="section-container bg-surface">
+        <div class="section-title-wrap">
+          <span class="pill-tag">HOW IT WORKS</span>
+          <h2 class="section-title">The EcoByte Lifecycle Process</h2>
+          <p class="section-subtitle">Safe, auditable, and environmentally certified electronics recovery.</p>
+        </div>
+
+        <div class="step-card-grid">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <div class="step-badge-code">SIGN IN & BOOK</div>
+            <h3>Account & Booking</h3>
+            <p>Log in or sign up, select your discarded electronics, specify address, and receive your unique <strong>Tracking ID</strong>.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <div class="step-badge-code">COLLECT</div>
+            <h3>Verified Doorstep Pickup</h3>
+            <p>Certified logistics personnel collect your items with digital barcode scanning and data seal verification.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <div class="step-badge-code">DISMANTLE</div>
+            <h3>Safe Urban Extraction</h3>
+            <p>R2-certified facilities mechanically dismantle devices, recovering copper and gold while neutralizing lead.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">04</div>
+            <div class="step-badge-code">CERTIFY</div>
+            <h3>Disposal Certificate</h3>
+            <p>Download your verified Government-compliant Disposal Certificate once your items are recycled.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accepted Categories -->
+      <div class="section-container">
+        <div class="section-title-wrap">
+          <span class="pill-tag">ELECTRONICS ACCEPTED</span>
+          <h2 class="section-title">Classified E-Waste Categories</h2>
+          <p class="section-subtitle">We accept all electronic hardware under Central Pollution Control regulations.</p>
+        </div>
+
+        <div class="category-cards-grid">
+          <div class="category-item-card" onclick="triggerSchedulePickup('Computers & Laptops')">
+            <span class="category-code-tag">CAT-01</span>
+            <h3>IT and Computing Hardware</h3>
+            <p>Laptops, Desktop PCs, Servers, Keyboards, Hard Drives, RAM modules.</p>
+          </div>
+          <div class="category-item-card" onclick="triggerSchedulePickup('Mobile Phones & Tablets')">
+            <span class="category-code-tag">CAT-02</span>
+            <h3>Telecommunication Devices</h3>
+            <p>Smartphones, Tablets, Modems, Routers, Smartwatches, Pagers.</p>
+          </div>
+          <div class="category-item-card" onclick="triggerSchedulePickup('Consumer Electronics')">
+            <span class="category-code-tag">CAT-03</span>
+            <h3>Displays and Audio Equipment</h3>
+            <p>LED/LCD screens, CRT monitors, Sound systems, Headphones, Cameras.</p>
+          </div>
+          <div class="category-item-card" onclick="triggerSchedulePickup('Batteries & Power Units')">
+            <span class="category-code-tag">CAT-04</span>
+            <h3>Batteries and Energy Storage</h3>
+            <p>Lithium-ion, Lead-acid, UPS batteries, Power banks, Adapters.</p>
+          </div>
+          <div class="category-item-card" onclick="triggerSchedulePickup('Home Appliances')">
+            <span class="category-code-tag">CAT-05</span>
+            <h3>Household Electrical Appliances</h3>
+            <p>Microwaves, Refrigerators, Washing machines, Air conditioners.</p>
+          </div>
+          <div class="category-item-card" onclick="triggerSchedulePickup('Cables & Accessories')">
+            <span class="category-code-tag">CAT-06</span>
+            <h3>Wiring and Peripherals</h3>
+            <p>Copper cables, USB cords, HDMI connectors, chargers, transformers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Public Activity Ticker -->
+      <div class="section-container">
+        <div class="live-activity-bar">
+          <div class="activity-header">
+            <span class="live-ping"></span>
+            <strong>Recent EcoByte Pickups:</strong>
+          </div>
+          <div class="activity-scroller" id="recentActivityList">
+            <!-- Dynamically populated ticker items -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 2: USER DASHBOARD (APPEARS AFTER LOGIN / USER VIEW) -->
+    <!-- ------------------------------------------------------- -->
+    <section id="user-dashboard" class="tab-pane">
+      <div class="section-container">
+        <!-- Auth Gate if user is NOT logged in -->
+        <div id="dashboardAuthGate" class="auth-gate-card hidden">
+          <div class="gate-icon-box">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h2>Authentication Required</h2>
+          <p>You must be signed in to access your personal EcoByte Dashboard and manage recycling requests.</p>
+          <div class="gate-actions">
+            <button class="btn btn-primary" onclick="scrollToHomeAuth()">Sign In / Sign Up on Home Page</button>
+          </div>
+        </div>
+
+        <!-- Authenticated Dashboard Content -->
+        <div id="dashboardAuthContent">
+          <div class="dashboard-user-header">
+            <div>
+              <span class="pill-tag">CITIZEN PORTAL</span>
+              <h2 class="section-title" id="dashGreetingName">Welcome</h2>
+              <p class="section-subtitle">Manage your scheduled pickups and view your carbon offset.</p>
+            </div>
+            <div class="dash-header-actions">
+              <button class="btn btn-primary" onclick="switchTab('collection-form')">+ New Collection Request</button>
+              <button class="btn btn-secondary btn-sm" onclick="exportRequestsCSV('mine')">Export My Requests (CSV)</button>
+              <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Sign Out</button>
+            </div>
+          </div>
+
+          <!-- User Personal KPI Stat Cards -->
+          <div class="user-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-icon blue">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+              <div>
+                <div class="kpi-num" id="dashUserItems">0</div>
+                <div class="kpi-label">Total Devices Disposed</div>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon amber">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div>
+                <div class="kpi-num" id="dashUserCo2">~0.0 kg</div>
+                <div class="kpi-label">Personal CO2 Prevented</div>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-icon indigo">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div>
+                <div class="kpi-num" id="dashUserStatus">Active</div>
+                <div class="kpi-label">Account Verification</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Pickups & History Table in Dashboard -->
+          <div class="glass-card" style="margin-top: 2rem;">
+            <div class="card-header-clean">
+              <h3>Your Collection Request History</h3>
+              <span class="tag-live">LIVE AUDIT</span>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>Tracking ID</th>
+                    <th>Device Details</th>
+                    <th>Weight</th>
+                    <th>Pickup Date</th>
+                    <th>Current Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="userHistoryTableBody">
+                  <!-- Injected by DashboardManager in app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Interactive Calculator Inside Dashboard -->
+          <div class="glass-card" style="margin-top: 2rem;">
+            <div class="card-header-clean">
+              <h3>Device Recycling Impact Estimator</h3>
+              <span class="tag-live">SIMULATOR</span>
+            </div>
+            <p class="subtext" style="margin-bottom: 1rem;">Estimate precious metal yields and carbon savings prior to booking:</p>
+            <div class="device-chips" id="calcChips">
+              <button class="chip active" data-type="smartphone">Smartphone</button>
+              <button class="chip" data-type="laptop">Laptop</button>
+              <button class="chip" data-type="battery">Li-ion Battery</button>
+              <button class="chip" data-type="crt">CRT Monitor</button>
+              <button class="chip" data-type="cables">Wires & Cables</button>
+            </div>
+            <div class="calc-result-display" id="calcDisplay">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 3: COLLECTION REQUEST FORM (AUTH REQUIRED)          -->
+    <!-- ------------------------------------------------------- -->
+    <section id="collection-form" class="tab-pane">
+      <div class="section-container form-layout-container">
+        
+        <!-- Auth Gate when logged out -->
+        <div id="formAuthGate" class="auth-gate-card hidden">
+          <div class="gate-icon-box">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h2>Authentication Required to Put a Request</h2>
+          <p>To schedule an e-waste collection, and receive verified disposal manifests, you must first log in or sign up.</p>
+          <div class="gate-actions">
+            <button class="btn btn-primary" onclick="scrollToHomeAuth()">Sign In / Sign Up on Home Page</button>
+          </div>
+        </div>
+
+        <!-- The Collection Form (Displayed When Logged In) -->
+        <div id="formContentArea">
+          <div class="section-title-wrap">
+            <span class="pill-tag">DISPOSAL REQUEST</span>
+            <h2 class="section-title">Schedule An E-Waste Collection</h2>
+            <p class="section-subtitle">Authenticated user booking. Fill in device details and doorstep pickup preferences.</p>
+          </div>
+
+          <div class="form-grid-layout">
+            <!-- Main Form Column -->
+            <div class="form-card-main">
+              <form id="eWasteForm" novalidate>
+
+                <!-- Group 1: Device Information -->
+                <div class="form-step-group">
+                  <div class="step-legend">
+                    <span class="step-circle">1</span>
+                    <h3>Electronic Item Specifications</h3>
+                  </div>
+
+                  <div class="input-grid">
+                    <div class="form-control">
+                      <label for="deviceCategory">Primary Category <span class="required">*</span></label>
+                      <select id="deviceCategory" required>
+                        <option value="">Select Category...</option>
+                        <option value="Computers & Laptops">Computers and Laptops</option>
+                        <option value="Mobile Phones & Tablets">Mobile Phones and Tablets</option>
+                        <option value="Consumer Electronics">Displays, TV and Audio</option>
+                        <option value="Batteries & Power Units">Batteries and Power Storage</option>
+                        <option value="Home Appliances">Household Appliances</option>
+                        <option value="Cables & Accessories">Cables, Chargers and Peripherals</option>
+                      </select>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="deviceName">Item Name / Model <span class="required">*</span></label>
+                      <input type="text" id="deviceName" placeholder="e.g. Dell Inspiron 15 / iPhone X" required>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="deviceCondition">Operating Condition <span class="required">*</span></label>
+                      <select id="deviceCondition" required>
+                        <option value="Dead / Scrap / Not Working">Dead / Scrap / Not Working</option>
+                        <option value="Partially Functional / Broken Screen">Partially Functional / Broken Screen</option>
+                        <option value="Fully Working / Outdated">Fully Working / Outdated</option>
+                      </select>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="deviceQuantity">Quantity (Units) <span class="required">*</span></label>
+                      <div class="quantity-stepper">
+                        <button type="button" class="stepper-btn" onclick="adjustQuantity(-1)">-</button>
+                        <input type="number" id="deviceQuantity" value="1" min="1" max="100" required>
+                        <button type="button" class="stepper-btn" onclick="adjustQuantity(1)">+</button>
+                      </div>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="deviceWeight">Estimated Weight (kg) <span class="required">*</span></label>
+                      <input type="number" id="deviceWeight" value="2.5" step="0.1" min="0.1" required>
+                      <small class="helper-text">Auto-estimated based on selection. You can adjust this value.</small>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="deviceAge">Approximate Age (Years)</label>
+                      <input type="number" id="deviceAge" placeholder="e.g. 4" min="0" max="40">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 2: Pickup Logistics & User Details -->
+                <div class="form-step-group">
+                  <div class="step-legend">
+                    <span class="step-circle">2</span>
+                    <h3>Pickup Address & Contact Details</h3>
+                  </div>
+
+                  <div class="input-grid">
+                    <div class="form-control">
+                      <label for="userName">Full Name <span class="required">*</span></label>
+                      <input type="text" id="userName" placeholder="e.g. Aarav Sharma" required>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="userPhone">Phone Number <span class="required">*</span></label>
+                      <input type="tel" id="userPhone" placeholder="e.g. +91 98765 43210" required>
+                    </div>
+
+                    <div class="form-control full-width">
+                      <label for="userEmail">Email Address (For Certificate) <span class="required">*</span></label>
+                      <input type="email" id="userEmail" placeholder="e.g. aarav@example.com" required>
+                    </div>
+
+                    <div class="form-control full-width">
+                      <label for="userAddress">Complete Street Address <span class="required">*</span></label>
+                      <textarea id="userAddress" rows="2" placeholder="House/Flat No, Apartment, Street, Landmark" required></textarea>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="userCity">City <span class="required">*</span></label>
+                      <input type="text" id="userCity" placeholder="e.g. Mumbai / Bangalore / Delhi" required>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="userPincode">Postal / PIN Code <span class="required">*</span></label>
+                      <input type="text" id="userPincode" placeholder="e.g. 560001" required>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="pickupDate">Preferred Pickup Date <span class="required">*</span></label>
+                      <input type="date" id="pickupDate" required>
+                    </div>
+
+                    <div class="form-control">
+                      <label for="pickupTimeSlot">Preferred Time Slot <span class="required">*</span></label>
+                      <select id="pickupTimeSlot" required>
+                        <option value="Morning (09:00 AM - 12:00 PM)">Morning (09:00 AM - 12:00 PM)</option>
+                        <option value="Afternoon (12:00 PM - 04:00 PM)">Afternoon (12:00 PM - 04:00 PM)</option>
+                        <option value="Evening (04:00 PM - 07:00 PM)">Evening (04:00 PM - 07:00 PM)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 3: Verification & Data Privacy -->
+                <div class="form-step-group">
+                  <div class="step-legend">
+                    <span class="step-circle">3</span>
+                    <h3>Verification and Data Privacy Guarantee</h3>
+                  </div>
+
+                  <div class="upload-zone" id="uploadDropZone">
+                    <input type="file" id="itemImageInput" accept="image/*" class="file-input-hidden">
+                    <div class="upload-inner" id="uploadPlaceholder">
+                      <div class="upload-icon-clean">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                      </div>
+                      <p><strong>Upload Device Photo (Optional)</strong></p>
+                      <span>Click or drag image file here (PNG, JPG, WebP)</span>
+                    </div>
+                    <div class="image-preview-box hidden" id="imagePreviewBox">
+                      <img id="previewImageSrc" src="" alt="Device Preview">
+                      <button type="button" class="btn-remove-image" id="removeImageBtn" title="Remove image">&times;</button>
+                    </div>
+                  </div>
+
+                  <div class="checkbox-container">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="dataWipeCheckbox" required>
+                      <span class="checkbox-mark"></span>
+                      <span class="checkbox-label">
+                        <strong>Data Sanitation Acknowledgment:</strong> I confirm all sensitive personal accounts and data have been wiped from memory storage, or I authorize the certified recycler to physically shred/degauss the storage drive.
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Form Submit Actions -->
+                <div class="form-actions-bar">
+                  <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Fields</button>
+                  <button type="submit" class="btn btn-primary btn-lg" id="submitFormBtn">
+                    <span>Submit E-Waste Request</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Dynamic Live Calculation Aside -->
+            <aside class="form-aside-sidebar">
+              <div class="live-calc-card">
+                <div class="calc-header">
+                  <h3>Estimated Eco Impact</h3>
+                </div>
+                <p class="calc-sub">Live computation based on your selected items:</p>
+
+                <div class="calc-breakdown">
+                  <div class="calc-stat-row">
+                    <span>Total Est. Weight:</span>
+                    <strong id="liveWeightDisplay">2.5 kg</strong>
+                  </div>
+                  <div class="calc-stat-row">
+                    <span>CO2 Emission Offset:</span>
+                    <strong class="text-green" id="liveCo2Display">~4.8 kg CO2e</strong>
+                  </div>
+                  <div class="calc-stat-row">
+                    <span>Toxic Elements Diverted:</span>
+                    <strong class="text-amber" id="liveToxicDisplay">~340 grams</strong>
+                  </div>
+                </div>
+
+                <div class="safety-badge-box">
+                  <div>
+                    <strong>Zero-Landfill Policy</strong>
+                    <p>100% of disassembled elements are routed to certified secondary smelting.</p>
+                  </div>
+                </div>
+
+                <div class="quick-sample-fill">
+                  <span>Want to test quickly?</span>
+                  <button type="button" class="btn-sample-fill" onclick="fillSampleFormData()">Auto-fill Sample Data</button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 4: REQUEST TRACKING SYSTEM                          -->
+    <!-- ------------------------------------------------------- -->
+    <section id="request-tracker" class="tab-pane">
+      <div class="section-container">
+        <div class="section-title-wrap">
+          <span class="pill-tag">AUDIT TRAIL</span>
+          <h2 class="section-title">Live E-Waste Request Tracking</h2>
+          <p class="section-subtitle">Track the lifecycle journey of your discarded hardware from collection to certified smelting.</p>
+        </div>
+
+        <div class="tracker-search-panel">
+          <div class="tracker-input-wrapper">
+            <span class="search-icon-svg">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="trackerInput" placeholder="Enter Request ID (e.g. EW-2026-1042)">
+            <button class="btn btn-primary" id="trackSearchBtn" onclick="performTrackingSearch()">Search Status</button>
+          </div>
+
+          <div class="quick-track-pills">
+            <span class="pills-label">Quick Demo Presets:</span>
+            <div class="pills-container" id="quickTrackPillList">
+              <button class="pill-btn" onclick="setAndTrackId('EW-2026-1042')">EW-2026-1042 (In Transit)</button>
+              <button class="pill-btn" onclick="setAndTrackId('EW-2026-3391')">EW-2026-3391 (Certified Recycled)</button>
+              <button class="pill-btn" onclick="setAndTrackId('EW-2026-5812')">EW-2026-5812 (Pending Pickup)</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="trackingResultArea" class="tracking-result-card">
+          <!-- Populated dynamically by Tracker Engine in app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 5: E-WASTE AWARENESS AND LEARNING CENTRE            -->
+    <!-- ------------------------------------------------------- -->
+    <section id="awareness-centre" class="tab-pane">
+      <div class="section-container">
+        <div class="section-title-wrap">
+          <span class="pill-tag">EDUCATIONAL REPOSITORY</span>
+          <h2 class="section-title">E-Waste Awareness & Resource Centre</h2>
+          <p class="section-subtitle">Understand hazardous chemicals, urban mining potentials, and environmental best practices.</p>
+        </div>
+
+        <div class="subnav-tabs">
+          <button class="subtab-btn active" data-subtab="anatomy-tab">Inside A Smartphone</button>
+          <button class="subtab-btn" data-subtab="toxins-tab">Toxic Heavy Metal Matrix</button>
+          <button class="subtab-btn" data-subtab="dos-donts-tab">Do's and Don'ts</button>
+          <button class="subtab-btn" data-subtab="circular-tab">Circular vs Linear Economy</button>
+          <button class="subtab-btn" data-subtab="faq-tab">FAQ and Glossary</button>
+        </div>
+
+        <!-- Subtab 1: Anatomy of Smartphone & Computer -->
+        <div id="anatomy-tab" class="subtab-content active">
+          <div class="anatomy-grid">
+            <div class="anatomy-visual-column">
+              <div class="device-anatomy-card">
+                <div class="gadget-mockup">
+                  <div class="gadget-screen">
+                    <span class="hotspot hotspot-gold" data-info="gold" title="Gold & Silver Contacts"></span>
+                    <span class="hotspot hotspot-battery" data-info="battery" title="Lithium Cobalt Battery"></span>
+                    <span class="hotspot hotspot-screen" data-info="screen" title="Indium Tin Oxide Display"></span>
+                    <span class="hotspot hotspot-board" data-info="board" title="PCB & Solder"></span>
+                    <span class="hotspot hotspot-chassis" data-info="chassis" title="Aluminum / Polycarbonate Case"></span>
+                    <div class="mockup-label">Smartphone Internal Schematic (Click Nodes to Inspect)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="anatomy-info-column" id="hotspotDetailsPanel">
+              <div class="info-card-default">
+                <span class="info-tag">SELECT A COMPONENT</span>
+                <h3 id="anatomyDetailTitle">What Is Inside Your Phone?</h3>
+                <p id="anatomyDetailText">
+                  A typical modern smartphone contains over <strong>60 different elements</strong> from the periodic table, including precious metals, rare earth elements, and hazardous chemical toxins. Click any node on the schematic or buttons below.
+                </p>
+                <div class="anatomy-buttons-list">
+                  <button class="btn-outline-chip" onclick="showAnatomyDetail('gold')">Gold and Copper Contacts</button>
+                  <button class="btn-outline-chip" onclick="showAnatomyDetail('battery')">Lithium-Cobalt Battery</button>
+                  <button class="btn-outline-chip" onclick="showAnatomyDetail('board')">Logic Board and Solder</button>
+                  <button class="btn-outline-chip" onclick="showAnatomyDetail('screen')">Display and Rare Earths</button>
+                </div>
+                <div class="stat-highlight-box" id="anatomyFunFact">
+                  <strong>Did you know?</strong> 1 metric ton of discarded smartphones yields approximately <strong>300 grams of pure Gold</strong>, compared to only 5 grams from 1 ton of primary gold ore!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab 2: The Toxic Elements Matrix -->
+        <div id="toxins-tab" class="subtab-content">
+          <div class="toxins-grid" id="toxinsContainer">
+            <!-- Dynamically generated from toxins array in app.js -->
+          </div>
+        </div>
+
+        <!-- Subtab 3: Do's and Don'ts -->
+        <div id="dos-donts-tab" class="subtab-content">
+          <div class="dos-donts-grid">
+            <div class="guideline-card dos-card">
+              <div class="card-top-header">
+                <span class="guideline-badge do">DO</span>
+                <h3>Recommended Practices</h3>
+              </div>
+              <ul class="guideline-list">
+                <li><strong>Factory Reset and Wipe Personal Data:</strong> Delete all Google/Apple accounts and format drives before giving away devices.</li>
+                <li><strong>Tape Battery Terminals:</strong> Cover contacts of loose lithium-ion batteries with non-conductive electrical tape to prevent short-circuit fires.</li>
+                <li><strong>Keep Original Accessories Together:</strong> Bundling cables, chargers, and keyboards improves recovery yield and material segregation.</li>
+                <li><strong>Use Certified WEEE/CPCB Recyclers:</strong> Ensure the vendor provides traceable manifests and certified zero-landfill documentation.</li>
+                <li><strong>Store In Dry, Cool Environment:</strong> Keep old electronics away from rainwater and moisture to stop electrolyte leakage.</li>
+              </ul>
+            </div>
+
+            <div class="guideline-card donts-card">
+              <div class="card-top-header">
+                <span class="guideline-badge dont">DONT</span>
+                <h3>Prohibited Actions</h3>
+              </div>
+              <ul class="guideline-list">
+                <li><strong>Never Mix With Kitchen/Municipal Waste:</strong> Compacted garbage trucks can puncture lithium cells, triggering aggressive explosions.</li>
+                <li><strong>Never Burn Cables or Wires:</strong> Open combustion releases deadly dioxins, furans, and carcinogenic black carbon into local breathing air.</li>
+                <li><strong>Do Not Hand Over To Informal Ragpickers:</strong> Acid-bath extraction in backyards poisons rivers, soil, and causes severe neurological harm to workers.</li>
+                <li><strong>Do Not Smash CRT Screens or Tubes:</strong> Older cathode ray tubes contain up to 2-3 kilograms of poisonous lead dust under vacuum pressure.</li>
+                <li><strong>Avoid Storing Dead Batteries In Hot Drawers:</strong> Swollen or bloated lithium polymer pouches can spontaneously ignite when crushed.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab 4: Circular vs Linear Economy -->
+        <div id="circular-tab" class="subtab-content">
+          <div class="economy-comparison-card">
+            <div class="econ-column linear">
+              <span class="econ-badge bad">Traditional Linear Model</span>
+              <h3>Take to Make to Dispose to Pollute</h3>
+              <p>Mined raw ores are assembled into gadgets, used briefly, and dumped into open landfills, causing permanent soil toxicity and resource depletion.</p>
+              <div class="econ-stat">90% of materials permanently lost</div>
+            </div>
+            <div class="vs-divider">VS</div>
+            <div class="econ-column circular">
+              <span class="econ-badge good">EcoByte Circular Model</span>
+              <h3>Design to Use to Refurbish to Recover to Remanufacture</h3>
+              <p>Closed-loop urban mining: discarded components become pristine raw feedstocks for next-generation technology with 95% lower carbon emissions.</p>
+              <div class="econ-stat">Up to 98% material circular recovery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtab 5: FAQs & Terminology -->
+        <div id="faq-tab" class="subtab-content">
+          <div class="faq-accordion" id="faqAccordion">
+            <!-- Populated in JS with interactive toggles -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- TAB 6: ADMIN DEMO DASHBOARD                             -->
+    <!-- ------------------------------------------------------- -->
+    <section id="admin-portal" class="tab-pane">
+      <!-- Auth Gate: shown unless an administrator is signed in -->
+      <div id="adminAuthGate" class="section-container hidden">
+        <div class="auth-gate-card">
+          <div class="gate-icon-box">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h2>Administrator Sign-In Required</h2>
+          <p>The Facility Operations Center is restricted. Please sign in with the administrator account (Account Type: Facility Administrator) to continue.</p>
+          <div class="gate-actions">
+            <button class="btn btn-primary" onclick="scrollToAdminLogin()">Administrator Sign In</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="adminAuthContent" class="section-container hidden">
+        <div class="admin-top-banner">
+          <div>
+            <span class="pill-tag admin-tag">ADMINISTRATOR CONTROL CONSOLE</span>
+            <h2 class="section-title">EcoByte Facility Operations Center</h2>
+            <p class="section-subtitle">Supervision of logistics, verification statuses, recycling workflows, and inventory audit.</p>
+          </div>
+          <div class="admin-actions-header">
+            <button class="btn btn-secondary btn-sm" onclick="seedDefaultDemoData()">
+              Reset Default Demo Data
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openAddQuickModal()">
+              + Add Mock Request
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="exportRequestsCSV('all')">
+              Export All to CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin KPI Metrics Cards -->
+        <div class="admin-kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon blue">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <div>
+              <div class="kpi-num" id="adminTotalCount">0</div>
+              <div class="kpi-label">Total Requests Logged</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon amber">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div>
+              <div class="kpi-num" id="adminPendingCount">0</div>
+              <div class="kpi-label">Pending Logistics</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon indigo">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <div>
+              <div class="kpi-num" id="adminTransitCount">0</div>
+              <div class="kpi-label">In Transit to Hub</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div>
+              <div class="kpi-num" id="adminCompletedCount">0</div>
+              <div class="kpi-label">Processed & Certified</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Operations Filter & Management Table -->
+        <div class="admin-table-container glass-card">
+          <div class="table-filter-bar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="adminSearchInput" placeholder="Filter by ID, Customer Name, or City..." oninput="filterAdminTable()">
+            </div>
+            <div class="filter-dropdowns">
+              <select id="adminStatusFilter" onchange="filterAdminTable()">
+                <option value="ALL">All Statuses</option>
+                <option value="Submitted">Submitted (Pending)</option>
+                <option value="Logistics Assigned">Logistics Assigned</option>
+                <option value="In Transit">In Transit</option>
+                <option value="At Recycling Facility">At Facility</option>
+                <option value="Recycled & Certified">Recycled & Certified</option>
+              </select>
+              <select id="adminCategoryFilter" onchange="filterAdminTable()">
+                <option value="ALL">All Categories</option>
+                <option value="Computers & Laptops">Computers & Laptops</option>
+                <option value="Mobile Phones & Tablets">Mobile Phones & Tablets</option>
+                <option value="Consumer Electronics">Displays & Audio</option>
+                <option value="Batteries & Power Units">Batteries & Power</option>
+                <option value="Home Appliances">Home Appliances</option>
+                <option value="Cables & Accessories">Cables & Accessories</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-data-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Customer Name & Contact</th>
+                  <th>Device / Category</th>
+                  <th>Weight (kg)</th>
+                  <th>Pickup Slot</th>
+                  <th>Current Status</th>
+                  <th>Update Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody">
+                <!-- Dynamically populated by AdminManager in app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 3. MODALS (REQUEST SUCCESS, CERTIFICATES, QUICK ADD)      -->
+  <!-- ========================================================= -->
+
+  <!-- Modal 1: Request Submission Success Modal -->
+  <div class="modal-overlay hidden" id="requestSuccessModal">
+    <div class="modal-card">
+      <div class="modal-badge-success">OK</div>
+      <h2>Collection Request Confirmed</h2>
+      <p class="modal-subtext">Your e-waste disposal booking has been registered successfully in our network.</p>
+      
+      <div class="tracking-id-highlight">
+        <span class="label">Your Official Tracking ID</span>
+        <div class="id-copy-row">
+          <span class="id-text" id="successTrackingId">EW-2026-XXXX</span>
+          <button class="btn btn-sm btn-secondary" onclick="copyTrackingId()">Copy ID</button>
+        </div>
+      </div>
+
+      <div class="modal-details-summary" id="successDetailsSummary">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('requestSuccessModal')">Close</button>
+        <button class="btn btn-primary" onclick="proceedToTrackSuccessId()">
+          <span>Track Live Journey Now</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Official E-Waste Safe Disposal Certificate -->
+  <div class="modal-overlay hidden" id="disposalCertificateModal">
+    <div class="modal-card certificate-card" id="printableDisposalCert">
+      <button class="modal-close-icon" onclick="closeModal('disposalCertificateModal')">&times;</button>
+      
+      <div class="certificate-border">
+        <div class="cert-header">
+          <div class="cert-seal-text">ECOBYTE R2 CERTIFIED</div>
+          <div class="cert-titles">
+            <span class="cert-super">GOVERNMENT & WEEE COMPLIANT AUDIT MANIFEST</span>
+            <h2>Certificate of Safe E-Waste Destruction & Recovery</h2>
+            <span class="cert-sub">Issued under Central Pollution Control & Environmental Protection Norms</span>
+          </div>
+        </div>
+
+        <div class="cert-body">
+          <p class="cert-statement">
+            This is to certify that the electronic equipment registered under reference number:
+          </p>
+          <div class="cert-tracking-highlight" id="certTrackingId">EW-2026-3391</div>
+          
+          <div class="cert-meta-grid">
+            <div class="meta-item">
+              <span class="meta-lbl">Client / Originator:</span>
+              <strong id="certUserName">Priya Nair</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-lbl">Item Category & Model:</span>
+              <strong id="certItemName">Apple MacBook Pro 13" (Laptop)</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-lbl">Disposal Method:</span>
+              <strong>ISO 14001 Mechanical Shredding & Smelting</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-lbl">Net Material Diverted:</span>
+              <strong id="certWeight">2.1 kg (100% Zero Landfill)</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-lbl">Disposal Date:</span>
+              <strong id="certDate">October 14, 2026</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-lbl">GHG Offset:</span>
+              <strong class="text-green" id="certCarbon">~5.4 kg CO2e Saved</strong>
+            </div>
+          </div>
+
+          <p class="cert-legal">
+            Certified that all volatile brominated compounds and heavy metals (Pb, Hg, Cd) were neutralized in secondary emission scrubbing reactors, with zero discharge into public water supplies.
+          </p>
+
+          <div class="cert-footer-row">
+            <div class="cert-qr-box">
+              <div class="fake-qr">ECOBYTE<br>VERIFIED<br>CPCB-R2</div>
+              <span>Digital Audit Hash</span>
+            </div>
+            <div class="cert-signature-block">
+              <div class="sig-line">Dr. Alok Verma</div>
+              <span>Chief Environmental Officer, EcoByte</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions no-print">
+        <button class="btn btn-secondary" onclick="closeModal('disposalCertificateModal')">Close</button>
+        <button class="btn btn-primary" onclick="window.print()">
+          <span>Print / Save as PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Quick Add Mock Request (For Demo) -->
+  <div class="modal-overlay hidden" id="quickAddModal">
+    <div class="modal-card">
+      <button class="modal-close-icon" onclick="closeModal('quickAddModal')">&times;</button>
+      <h2>+ Add Instant Mock Request</h2>
+      <p class="modal-subtext">Convenient tool to create a quick demonstration item on the spot for your professor.</p>
+      
+      <div class="input-grid">
+        <div class="form-control">
+          <label>Customer Name</label>
+          <input type="text" id="quickCustomerName" value="Rahul Verma">
+        </div>
+        <div class="form-control">
+          <label>City</label>
+          <input type="text" id="quickCity" value="New Delhi">
+        </div>
+        <div class="form-control">
+          <label>Category</label>
+          <select id="quickCategory">
+            <option value="Computers & Laptops">Computers & Laptops</option>
+            <option value="Mobile Phones & Tablets">Mobile Phones & Tablets</option>
+            <option value="Consumer Electronics">Displays & Audio</option>
+            <option value="Batteries & Power Units">Batteries & Power</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label>Device Name</label>
+          <input type="text" id="quickItemName" value="Old Dell PC Tower">
+        </div>
+        <div class="form-control">
+          <label>Weight (kg)</label>
+          <input type="number" id="quickWeight" value="6.5">
+        </div>
+        <div class="form-control">
+          <label>Status</label>
+          <select id="quickStatus">
+            <option value="Submitted">Submitted (Pending)</option>
+            <option value="Logistics Assigned">Logistics Assigned</option>
+            <option value="In Transit">In Transit</option>
+            <option value="At Recycling Facility">At Recycling Facility</option>
+            <option value="Recycled & Certified">Recycled & Certified</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('quickAddModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitQuickMockRequest()">Create Mock Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 4. FOOTER                                                 -->
+  <!-- ========================================================= -->
+  <footer class="portal-footer">
+    <div class="footer-grid">
+      <div class="footer-col brand-col">
+        <div class="brand-group">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"></path><path d="M11 19h8.2a1.8 1.8 0 0 0 1.57-.88 1.79 1.79 0 0 0 0-1.78L17.5 10"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <span class="brand-title">Eco<span class="accent-text">Byte</span></span>
+        </div>
+        <p>A unified academic and community platform for responsible e-waste collection, verified trace-back logistics, and circular urban mining awareness.</p>
+        <div class="project-credit-tag">Designed for Academic Demonstration and Software Engineering Project Evaluation</div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Portal Navigation</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="switchTab('home-page')">Home Overview</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('user-dashboard')">User Dashboard</a></li>
+          <li><a href="javascript:void(0)" onclick="triggerSchedulePickup()">Schedule Pickup</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('request-tracker')">Live Request Tracker</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('awareness-centre')">Learning & Hazard Centre</a></li>
+          <li><a href="javascript:void(0)" onclick="switchTab('admin-portal')">Admin Operations</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>E-Waste Resources</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="showAnatomyTab()">Smartphone Teardown</a></li>
+          <li><a href="javascript:void(0)" onclick="showToxinsTab()">Heavy Metal Health Guide</a></li>
+          <li><a href="javascript:void(0)" onclick="showDosDontsTab()">Battery Disposal Precautions</a></li>
+          <li><a href="javascript:void(0)" onclick="setAndTrackId('EW-2026-3391')">Sample Audit Certificate</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Compliance & Standards</h4>
+        <div class="compliance-badges">
+          <span class="comp-badge">CPCB E-Waste Rules 2022</span>
+          <span class="comp-badge">WEEE Directive Compliant</span>
+          <span class="comp-badge">R2 Certified Recycler Network</span>
+          <span class="comp-badge">ISO 14001 Environmental Standard</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>&copy; 2026 EcoByte Portal System. Created with Vanilla HTML5, CSS3 & JavaScript. Clean academic edition.</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>
